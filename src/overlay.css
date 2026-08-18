@@ -1,0 +1,13 @@
+/* overlay.css - Host container styles for the JobMate AI overlay */
+#jobmate-ai-overlay {
+  all: initial;
+  position: fixed;
+  z-index: 2147483647;
+  top: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+#jobmate-ai-overlay * {
+  pointer-events: auto;
+}

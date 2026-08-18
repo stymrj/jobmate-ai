@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobMate AI · Admin</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #4f46e5;
+      --primary-soft: #eef2ff;
+      --violet: #7c3aed;
+      --green: #059669;
+      --red: #dc2626;
+      --radius: 12px;
+      --shadow: 0 4px 16px rgba(15, 23, 42, 0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 28px 20px 60px;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-weight: 800; font-size: 20px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+    }
+    h1 { font-size: 20px; font-weight: 800; }
+    .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .login-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      max-width: 420px;
+      margin: 60px auto 0;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .login-box h2 { font-size: 16px; margin-bottom: 12px; }
+    .login-box input {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 14px; margin-bottom: 10px;
+    }
+    .login-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,.15); }
+    .login-box button {
+      width: 100%; padding: 10px; border: none; border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--violet));
+      color: white; font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .login-error { color: var(--red); font-size: 12.5px; margin-top: 8px; display: none; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .stat-card .value { font-size: 26px; font-weight: 800; }
+    .stat-card .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .stat-card .accent { color: var(--primary); }
+    .stat-card .green { color: var(--green); }
+    .stat-card .violet { color: var(--violet); }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+    .panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-bottom: 1px solid var(--border);
+    }
+    .panel-head h2 { font-size: 14.5px; font-weight: 700; }
+    .tabs { display: flex; gap: 6px; }
+    .tab {
+      padding: 7px 14px; border: 1px solid var(--border); background: none;
+      border-radius: 8px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--muted);
+    }
+    .tab.active { background: var(--primary-soft); color: var(--primary); border-color: #c7d2fe; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase;
+      letter-spacing: .5px; color: var(--muted); border-bottom: 1px solid var(--border); background: #f8fafc;
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbff; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; }
+    .pill {
+      display: inline-block; padding: 2px 9px; border-radius: 99px;
+      font-size: 11px; font-weight: 600;
+    }
+    .pill.blue { background: #e0e7ff; color: #3730a3; }
+    .pill.gray { background: #f1f5f9; color: #475569; }
+    .empty { padding: 30px; text-align: center; color: var(--muted); font-size: 13px; }
+
+    /* Chart */
+    .chart { display: flex; align-items: flex-end; gap: 10px; height: 130px; padding: 18px 18px 8px; }
+    .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+    .chart-bar-wrap { width: 100%; flex: 1; display: flex; align-items: flex-end; justify-content: center; }
+    .chart-bar {
+      width: 60%; max-width: 42px; min-height: 3px;
+      background: linear-gradient(180deg, #4f46e5, #7c3aed);
+      border-radius: 6px 6px 0 0;
+      transition: height .4s ease;
+      position: relative;
+    }
+    .chart-bar:hover::after {
+      content: attr(data-label);
+      position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+      background: #0f172a; color: white; font-size: 10.5px; padding: 3px 8px; border-radius: 6px;
+      white-space: nowrap; z-index: 5;
+    }
+    .chart-day { font-size: 10px; color: var(--muted); }
+
+    .user-detail {
+      padding: 16px 18px; border-top: 1px solid var(--border);
+      background: #f8fafc; font-size: 12.5px; display: none;
+    }
+    .user-detail code { background: #eef2f7; padding: 2px 6px; border-radius: 5px; }
+    .btn-detail {
+      background: none; border: 1px solid var(--border); border-radius: 7px;
+      padding: 3px 10px; font-size: 11.5px; cursor: pointer; color: var(--muted);
+    }
+    .btn-detail:hover { color: var(--primary); border-color: var(--primary); }
+
+    .event-type { font-weight: 600; }
+    footer { text-align: center; font-size: 11.5px; color: var(--muted); margin-top: 26px; }
+    .refresh { color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 8px; }
+    #refreshBtn {
+      border: 1px solid var(--border); background: var(--surface); border-radius: 8px;
+      padding: 6px 12px; font-size: 12px; cursor: pointer; font-weight: 600;
+    }
+    #refreshBtn:hover { border-color: var(--primary); color: var(--primary); }
+    .error-banner {
+      display: none; background: #fef2f2; color: var(--red); border: 1px solid #fecaca;
+      padding: 12px 16px; border-radius: var(--radius); margin-bottom: 18px; font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Login gate -->
+    <div class="login-box" id="loginBox">
+      <div class="logo" style="margin: 0 auto 14px;">J</div>
+      <h2>JobMate AI · Admin</h2>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;">Enter the admin token (set via <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;">ADMIN_TOKEN</code>)</p>
+      <input type="password" id="tokenInput" placeholder="Admin token" autocomplete="off">
+      <button id="loginBtn">Access Dashboard</button>
+      <p class="login-error" id="loginError">Invalid token</p>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" style="display:none;">
+
+      <header>
+        <div class="brand">
+          <div class="logo">J</div>
+          <div>
+            <h1>JobMate AI · Admin</h1>
+            <p class="sub" id="lastUpdated">Loading…</p>
+          </div>
+        </div>
+        <div class="refresh">
+          <button id="refreshBtn">↻ Refresh</button>
+        </div>
+      </header>
+
+      <div class="error-banner" id="errorBanner"></div>
+
+      <div class="stat-grid" id="statsRow"></div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Shared AI Key</h2>
+        </div>
+        <div style="padding: 16px 18px;">
+          <p style="font-size: 12.5px; color: var(--muted); margin-bottom: 14px;">
+            This key is shipped to every installed copy of the extension and used when a user
+            hasn't set their own in the popup. Changes reach users within ~10 minutes (the
+            extension re-checks automatically). Leave the key empty to let every user bring
+            their own.
+          </p>
+          <div style="display:flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <select id="setProvider" style="padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13.5px; background: #fff;">
+              <option value="gemini">Google Gemini</option>
+              <option value="openai">OpenAI</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="claude">Anthropic Claude</option>
+            </select>
+            <input type="password" id="setApiKey" placeholder="Shared API key (provider-specific)" style="flex: 1; min-width: 260px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13.5px;">
+            <input type="text" id="setModel" placeholder="Model override (optional)" style="min-width: 180px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13.5px;">
+            <button id="saveSettingsBtn" style="padding: 9px 16px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--violet)); color: white; font-size: 13px; font-weight: 600; cursor: pointer;">Save</button>
+          </div>
+          <p id="settingsStatus" style="font-size: 12px; color: var(--green); margin-top: 10px; display: none;"></p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Activity — last 14 days</h2>
+        </div>
+        <div class="chart" id="chart"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2 id="tableTitle">Users</h2>
+          <div class="tabs">
+            <button class="tab active" data-view="users">Users</button>
+            <button class="tab" data-view="events">Events</button>
+          </div>
+        </div>
+        <div id="tableContainer"></div>
+      </div>
+
+      <footer>JobMate AI · admin panel · data stored locally on this server (admin/data/db.json)</footer>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    const token = localStorage.getItem('jobmate_token') || '';
+    if (token) { document.getElementById('loginBox').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; }
+
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const t = document.getElementById('tokenInput').value.trim();
+      verifyToken(t).then(ok => {
+        if (ok) {
+          localStorage.setItem('jobmate_token', t);
+          document.getElementById('loginBox').style.display = 'none';
+          document.getElementById('dashboard').style.display = 'block';
+          loadAll();
+        } else {
+          document.getElementById('loginError').style.display = 'block';
+        }
+      });
+    });
+
+    async function api(path) {
+      const t = localStorage.getItem('jobmate_token') || '';
+      const resp = await fetch(path + (path.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(t));
+      if (resp.status === 401) {
+        localStorage.removeItem('jobmate_token');
+        document.getElementById('loginBox').style.display = 'block';
+        document.getElementById('dashboard').style.display = 'none';
+        return null;
+      }
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || resp.statusText);
+      }
+      return resp.json();
+    }
+
+    async function verifyToken(t) {
+      try {
+        const resp = await fetch('/api/admin/stats?token=' + encodeURIComponent(t));
+        return resp.status === 200;
+      } catch (e) { return false; }
+    }
+
+    function esc(v) {
+      const div = document.createElement('div');
+      div.textContent = v == null ? '' : String(v);
+      return div.innerHTML;
+    }
+
+    function fmtTime(ts) {
+      if (!ts) return '—';
+      return new Date(ts).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function fmtNum(n) {
+      return new Intl.NumberFormat().format(n || 0);
+    }
+
+    function renderStats(stats) {
+      const cards = [
+        { value: stats.totalUsers, label: 'Total users', cls: 'accent' },
+        { value: stats.activeToday, label: 'Active today', cls: 'green' },
+        { value: stats.active7d, label: 'Active (7d)', cls: 'violet' },
+        { value: fmtNum(stats.totalAutofills), label: 'Autofills started', cls: 'accent' },
+        { value: fmtNum(stats.fieldsFilled), label: 'Fields filled', cls: 'green' },
+        { value: fmtNum(stats.totalEvents), label: 'Events', cls: 'violet' }
+      ];
+      document.getElementById('statsRow').innerHTML = cards.map(c =>
+        `<div class="stat-card"><div class="value ${c.cls}">${esc(c.value)}</div><div class="label">${esc(c.label)}</div></div>`
+      ).join('');
+    }
+
+    function renderChart(stats) {
+      const days = stats.daily || [];
+      const max = Math.max(1, ...days.map(d => d.events));
+      document.getElementById('chart').innerHTML = days.map(d => {
+        const h = Math.max(3, Math.round((d.events / max) * 100));
+        const label = d.date.slice(5).replace('-', '/');
+        return `<div class="chart-col">
+          <div class="chart-bar-wrap"><div class="chart-bar" style="height:${h}%" data-label="${esc(d.date)} · ${d.events} events · ${d.users} users"></div></div>
+          <div class="chart-day">${label}</div>
+        </div>`;
+      }).join('');
+    }
+
+    let activeView = 'users';
+    let usersData = [];
+    let eventsData = [];
+
+    function renderUsers() {
+      document.getElementById('tableTitle').textContent = `Users (${usersData.length})`;
+      if (!usersData.length) {
+        document.getElementById('tableContainer').innerHTML = '<div class="empty">No users yet — the extension is installed but hasn\'t reported anything.</div>';
+        return;
+      }
+      document.getElementById('tableContainer').innerHTML = `
+        <table>
+          <thead><tr><th>User</th><th>First seen</th><th>Last seen</th><th>Events</th><th>Autofills</th><th>Sites</th><th>Top site</th></tr></thead>
+          <tbody>
+            ${usersData.map(u => `
+              <tr>
+                <td class="mono" title="${esc(u.userId)}">${esc(u.userId.slice(0, 13))}…</td>
+                <td>${fmtTime(u.firstSeen)}</td>
+                <td>${fmtTime(u.lastSeen)}</td>
+                <td>${fmtNum(u.events)}</td>
+                <td>${fmtNum(u.autofills)}</td>
+                <td>${u.sites}</td>
+                <td class="mono">${esc(u.topSite || '—')}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }
+
+    function renderEvents() {
+      document.getElementById('tableTitle').textContent = `Events (latest ${eventsData.length})`;
+      if (!eventsData.length) {
+        document.getElementById('tableContainer').innerHTML = '<div class="empty">No events recorded yet.</div>';
+        return;
+      }
+      document.getElementById('tableContainer').innerHTML = `
+        <table>
+          <thead><tr><th>Time</th><th>User</th><th>Event</th><th>Site</th><th>Details</th></tr></thead>
+          <tbody>
+            ${eventsData.map(e => `
+              <tr>
+                <td>${fmtTime(e.ts)}</td>
+                <td class="mono" title="${esc(e.userId)}">${esc(e.userId.slice(0, 13))}…</td>
+                <td><span class="pill ${e.event.includes('fill') ? 'blue' : 'gray'}">${esc(e.event)}</span></td>
+                <td class="mono">${esc(e.site || '—')}</td>
+                <td class="mono" style="color:var(--muted);">${esc(e.filled !== undefined ? 'filled=' + e.filled + '/' + e.total : '')}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }
+
+    function renderTable() {
+      if (activeView === 'users') renderUsers();
+      else renderEvents();
+    }
+
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeView = btn.dataset.view;
+        renderTable();
+      });
+    });
+
+    async function loadAll() {
+      const banner = document.getElementById('errorBanner');
+      banner.style.display = 'none';
+      try {
+        const [stats, users, events] = await Promise.all([
+          api('/api/admin/stats'),
+          api('/api/admin/users'),
+          api('/api/admin/events?limit=200')
+        ]);
+        if (!stats) return;
+        usersData = users.users || [];
+        eventsData = events.events || [];
+        renderStats(stats);
+        renderChart(stats);
+        renderTable();
+        document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+      } catch (e) {
+        banner.textContent = 'Failed to load: ' + e.message;
+        banner.style.display = 'block';
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadAll);
+    setInterval(loadAll, 30000);
+
+    // Shared AI key management (load is public, saving requires the token).
+    async function loadSharedKey() {
+      try {
+        const resp = await fetch('/api/admin/settings');
+        if (!resp.ok) return;
+        const s = await resp.json();
+        document.getElementById('setProvider').value = s.aiProvider || 'gemini';
+        document.getElementById('setApiKey').value = s.apiKey || '';
+        document.getElementById('setModel').value = s.aiModel || '';
+      } catch (e) { /* dashboard offline */ }
+    }
+
+    document.getElementById('saveSettingsBtn').addEventListener('click', async () => {
+      const status = document.getElementById('settingsStatus');
+      status.style.display = 'none';
+      try {
+        const t = localStorage.getItem('jobmate_token') || '';
+        const resp = await fetch('/api/admin/settings?token=' + encodeURIComponent(t), {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            apiKey: document.getElementById('setApiKey').value.trim(),
+            aiProvider: document.getElementById('setProvider').value,
+            aiModel: document.getElementById('setModel').value.trim()
+          })
+        });
+        if (resp.status === 401) {
+          status.textContent = 'Invalid token — re-login and try again.';
+          status.style.color = 'var(--red)';
+          status.style.display = 'block';
+          return;
+        }
+        if (!resp.ok) throw new Error('save failed');
+        const r = await resp.json();
+        status.textContent = 'Saved ✓ extensions will pick this up within ~10 minutes (updated ' + new Date(r.settings.updatedAt).toLocaleTimeString() + ').';
+        status.style.color = 'var(--green)';
+        status.style.display = 'block';
+      } catch (e) {
+        status.textContent = 'Failed to save: ' + e.message;
+        status.style.color = 'var(--red)';
+        status.style.display = 'block';
+      }
+    });
+
+    if (token) loadAll();
+    loadSharedKey();
+  </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JobMate AI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 3h7a5 5 0 0 1 0 10H7V3z"/>
+            <path d="M7 13h8a5 5 0 0 1 0 10H7V13z"/>
+          </svg>
+        </div>
+        <div>
+          <h1>JobMate AI</h1>
+          <p class="subtitle">Auto Fill Application form</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="upload">Upload</button>
+      <button class="tab" data-tab="preview">Preview</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <!-- Upload Tab -->
+    <section class="tab-content active" id="tab-upload">
+      <div class="upload-area" id="dropZone" role="button" tabindex="0" aria-label="Upload resume">
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <path d="M17 8l-5-5-5 5"/>
+            <path d="M12 3v12"/>
+          </svg>
+        </div>
+        <p class="upload-text">Drag &amp; drop your resume here</p>
+        <p class="upload-hint">or click to browse (PDF, DOCX)</p>
+        <input type="file" id="fileInput" accept=".pdf,.docx" hidden>
+      </div>
+
+      <div class="file-card" id="fileInfo" style="display:none;">
+        <span class="file-icon">📄</span>
+        <div class="file-details">
+          <p class="file-name" id="fileName"></p>
+          <p class="file-size" id="fileSize"></p>
+        </div>
+        <button class="btn-remove" id="removeFile" title="Remove resume">✕</button>
+      </div>
+
+      <div class="parse-status" id="parseStatus" style="display:none;">
+        <div class="spinner"></div>
+        <span id="parseStatusText">Parsing...</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="parseBtn" disabled>Parse Resume with AI</button>
+        <button class="btn btn-accent" id="autofillBtn" disabled>Start Autofill on Page</button>
+      </div>
+    </section>
+
+    <!-- Preview Tab -->
+    <section class="tab-content" id="tab-preview">
+      <div class="preview-empty" id="previewEmpty">
+        <p>No resume parsed yet</p>
+        <p class="hint">Upload a PDF or DOCX in the Upload tab and JobMate AI will structure it for autofill.</p>
+      </div>
+      <div id="previewData" style="display:none;"></div>
+    </section>
+
+    <!-- Settings Tab -->
+    <section class="tab-content" id="tab-settings">
+      <div class="setting-group">
+        <label class="setting-label" for="aiProvider">AI Provider</label>
+        <select class="input" id="aiProvider">
+          <option value="openai">OpenAI</option>
+          <option value="gemini">Google Gemini</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="claude">Anthropic Claude</option>
+        </select>
+        <p class="setting-hint" id="providerHint">Choose which AI service parses your resume and maps form fields.</p>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label" for="aiModel">Model</label>
+        <div class="input-group">
+          <input type="text" class="input" id="aiModel" placeholder="auto" autocomplete="off">
+        </div>
+        <p class="setting-hint">Leave empty for the provider's default. Presets: <span id="modelPresets" class="presets"></span></p>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label" for="apiKey"><span id="apiKeyLabel">API Key</span></label>
+        <div class="input-group">
+          <input type="password" class="input" id="apiKey" placeholder="sk-..." autocomplete="off">
+          <button class="btn-toggle-vis" id="toggleKey" title="Show / hide">👁</button>
+        </div>
+        <p class="setting-hint" id="apiKeyHint">Optional but recommended. Without a key, JobMate AI fills fields heuristically. Your key stays in your browser.</p>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label" for="analyticsEndpoint">Usage Analytics (optional)</label>
+        <input type="text" class="input" id="analyticsEndpoint" placeholder="https://admin.yourdomain.com/api/events">
+        <label class="checkbox-label">
+          <input type="checkbox" id="analyticsEnabled">
+          <span>Send anonymous usage statistics (user count, autofill usage, top sites). No personal data.</span>
+        </label>
+        <p class="setting-hint">Your anonymous user ID: <code id="userId">—</code></p>
+      </div>
+
+      <button class="btn btn-primary" id="saveSettings">Save Settings</button>
+      <p class="save-status" id="saveStatus">✓ Saved</p>
+    </section>
+
+    <footer class="footer">Developed by <a href="https://linkedin.com/in/stymrj" target="_blank" rel="noopener noreferrer">Satyam Raj</a> ❤️ · JobMate AI · works on Workday, Greenhouse, Lever, and more</footer>
+  </div>
+
+  <script src="../libs/pdf.min.js"></script>
+  <script src="../libs/mammoth.browser.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

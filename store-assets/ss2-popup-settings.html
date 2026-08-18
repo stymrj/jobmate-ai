@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JobMate AI — Settings</title>
+<link rel="stylesheet" href="ss.css">
+</head>
+<body>
+<div class="desktop" style="display:flex;align-items:center;justify-content:center;">
+  <div class="popup">
+    <div class="pp-header">
+      <div class="pp-brand">
+        <div class="pp-logo">J</div>
+        <div>
+          <div class="pp-title">JobMate AI</div>
+          <div class="pp-sub">Settings</div>
+        </div>
+      </div>
+    </div>
+    <div class="pp-body">
+      <div class="pp-field">
+        <label>AI Provider</label>
+        <select>
+          <option>OpenAI (GPT-4o-mini)</option>
+          <option selected>Google Gemini (gemini-2.0-flash)</option>
+          <option>DeepSeek (deepseek-chat)</option>
+          <option>Claude (claude-3-5-haiku-latest)</option>
+        </select>
+      </div>
+
+      <div class="pp-field">
+        <label>API Key (optional — leave empty to use the shared key)</label>
+        <input type="password" value="AqJ9xR2mK7wQzB4cV6nP3" style="font-family:ui-monospace,Menlo,monospace;">
+      </div>
+      <div class="hint green">A shared Gemini key provided by the admin is currently in use. Set your own key above to override it.</div>
+
+      <div class="pp-field">
+        <label>Model</label>
+        <select>
+          <option selected>gemini-2.0-flash</option>
+          <option>gemini-2.0-pro</option>
+        </select>
+      </div>
+
+      <div class="pp-field">
+        <label>Usage analytics</label>
+        <div class="toggle-row">
+          <span class="hint" style="margin:0">Send anonymous usage statistics</span>
+          <div class="toggle off"></div>
+        </div>
+      </div>
+
+      <button class="btn-primary">Save Settings</button>
+      <div class="hint green" style="margin-top:8px">&#10003; Settings saved. AI features will use Google Gemini.</div>
+    </div>
+    <div class="pp-footer">Developed by <a href="https://linkedin.com/in/stymrj">Satyam Raj</a> &#10084;&#65039; &middot; JobMate AI</div>
+  </div>
+</div>
+</body>
+</html>

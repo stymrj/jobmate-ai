@@ -1,0 +1,14 @@
+{
+  "name": "jobmate-ai-admin",
+  "version": "1.0.0",
+  "description": "Admin panel + analytics endpoint for the JobMate AI Chrome extension. Zero runtime dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,169 @@
+/* Shared styles for store listing screenshots (1280x800) */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: #eef1f7;
+  color: #0f172a;
+}
+
+/* Desktop background */
+.desktop {
+  width: 1280px; height: 800px;
+  background:
+    radial-gradient(1000px 500px at 15% -10%, rgba(124, 58, 237, 0.10), transparent 60%),
+    radial-gradient(900px 500px at 100% 110%, rgba(79, 70, 229, 0.10), transparent 60%),
+    #eef1f7;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------- Popup (mirrors popup/popup.css) ---------- */
+.popup {
+  width: 420px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  overflow: hidden;
+  font-size: 13px;
+}
+.pp-header {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  padding: 14px 16px;
+  color: #fff;
+}
+.pp-brand { display: flex; align-items: center; gap: 10px; }
+.pp-logo {
+  width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px;
+}
+.pp-title { font-size: 14.5px; font-weight: 700; }
+.pp-sub { font-size: 11px; opacity: 0.85; margin-top: 1px; }
+.pp-body { padding: 14px 16px; }
+.pp-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin: 14px 0 8px; }
+.pp-section-title:first-child { margin-top: 0; }
+
+.resume-card {
+  background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px;
+  padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start;
+}
+.resume-card .name { font-weight: 700; font-size: 14px; }
+.resume-card .meta { color: #166534; font-size: 11.5px; margin-top: 2px; }
+.resume-card .ok { color: #059669; font-weight: 800; font-size: 15px; }
+
+.pp-field { margin-bottom: 12px; }
+.pp-field label { display: block; font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 4px; }
+.pp-field input, .pp-field select {
+  width: 100%; padding: 8px 10px; border: 1px solid #e2e8f0; border-radius: 8px;
+  font-size: 12.5px; background: #fff; color: #0f172a;
+}
+.pp-field select { appearance: none; }
+.hint { font-size: 11px; color: #64748b; margin-top: 5px; line-height: 1.45; }
+.hint.green { color: #059669; }
+
+.btn-primary {
+  width: 100%; padding: 11px; border: none; border-radius: 10px; cursor: pointer;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: #fff; font-size: 13.5px; font-weight: 700; box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+}
+.btn-ghost {
+  width: 100%; padding: 9px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer;
+  background: #fff; color: #4f46e5; font-size: 12.5px; font-weight: 600; margin-top: 8px;
+}
+.toggle-row { display: flex; align-items: center; justify-content: space-between; }
+.toggle { width: 38px; height: 22px; border-radius: 99px; background: #4f46e5; position: relative; }
+.toggle::after { content: ''; position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; }
+.toggle.off { background: #cbd5e1; }
+.toggle.off::after { right: auto; left: 3px; }
+
+.pp-footer {
+  border-top: 1px solid #eef2f7; padding: 10px 16px;
+  font-size: 11px; color: #64748b; text-align: center;
+}
+.pp-footer a { color: #4f46e5; text-decoration: none; font-weight: 600; }
+
+.preview-item { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f1f5f9; font-size: 12.5px; }
+.preview-item:last-child { border-bottom: none; }
+.preview-item .k { color: #64748b; flex-shrink: 0; }
+.preview-item .v { text-align: right; font-weight: 500; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.skill-tag { background: #eef2ff; color: #4338ca; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 99px; }
+
+/* ---------- Browser window ---------- */
+.browser {
+  width: 1180px; height: 700px; margin: 50px auto 0;
+  background: #fff; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22);
+  display: flex; flex-direction: column;
+  border: 1px solid #dbe2ee;
+}
+.br-bar { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+.br-dots { display: flex; gap: 6px; }
+.br-dots span { width: 11px; height: 11px; border-radius: 50%; }
+.br-dots span:nth-child(1) { background: #fca5a5; }
+.br-dots span:nth-child(2) { background: #fcd34d; }
+.br-dots span:nth-child(3) { background: #86efac; }
+.br-url {
+  flex: 1; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px;
+  padding: 5px 12px; font-size: 11.5px; color: #475569; font-family: ui-monospace, Menlo, monospace;
+}
+.br-page { flex: 1; display: flex; }
+
+/* Workday-ish app */
+.wd-nav { width: 210px; background: #f8fafc; border-right: 1px solid #e2e8f0; padding: 18px 14px; }
+.wd-nav h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 10px; }
+.wd-step { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; font-size: 12px; color: #64748b; margin-bottom: 4px; }
+.wd-step .dot { width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; }
+.wd-step.done .dot { background: #059669; color: #fff; }
+.wd-step.active { background: #eef2ff; color: #4338ca; font-weight: 600; }
+.wd-step.active .dot { background: #4f46e5; color: #fff; }
+.wd-step.todo .dot { background: #e2e8f0; color: #64748b; }
+
+.wd-main { flex: 1; padding: 26px 34px; overflow: hidden; }
+.wd-main h1 { font-size: 21px; font-weight: 800; margin-bottom: 4px; }
+.wd-main .step-sub { font-size: 12px; color: #64748b; margin-bottom: 20px; }
+.wd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+.wd-field { display: flex; flex-direction: column; gap: 5px; }
+.wd-field label { font-size: 11.5px; font-weight: 600; color: #334155; }
+.wd-input {
+  border: 1px solid #d8e0ea; border-radius: 8px; padding: 9px 11px; font-size: 12.5px; background: #fff; color: #0f172a;
+}
+.wd-input.filled { border-color: #86efac; background: #f0fdf4; color: #065f46; }
+.wd-date { display: flex; gap: 8px; }
+.wd-date .wd-input { flex: 1; }
+.wd-btn {
+  margin-top: 22px; padding: 10px 22px; border: none; border-radius: 9px; cursor: pointer;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; font-size: 13px; font-weight: 700;
+}
+
+/* JobMate floating panel (mirrors overlay.js) */
+.jm-panel {
+  position: absolute; top: 0; right: 0;
+  width: 320px; background: #fff; border-radius: 14px 0 0 14px;
+  box-shadow: -8px 10px 30px rgba(15, 23, 42, 0.25);
+  border: 1px solid #e2e8f0; border-right: none;
+  overflow: hidden; font-size: 12px;
+}
+.jm-header { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); padding: 12px 14px; color: #fff; }
+.jm-brand { display: flex; align-items: center; gap: 9px; }
+.jm-logo { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; }
+.jm-title { font-size: 13px; font-weight: 700; }
+.jm-sub { font-size: 10px; opacity: 0.85; }
+.jm-status { padding: 10px 14px; font-size: 11.5px; color: #334155; border-bottom: 1px solid #eef2f7; }
+.jm-results { padding: 8px 14px 10px; }
+.jm-row { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid #f6f8fb; }
+.jm-row:last-child { border-bottom: none; }
+.jm-row .i { font-weight: 800; font-size: 12px; }
+.jm-row .i.ok { color: #059669; }
+.jm-row .i.warn { color: #f59e0b; }
+.jm-row .l { color: #334155; font-weight: 600; }
+.jm-row .v { color: #64748b; }
+.jm-count { font-size: 11px; font-weight: 700; color: #059669; margin-bottom: 6px; }
+.jm-actions { padding: 10px 14px; border-top: 1px solid #eef2f7; }
+.jm-next {
+  width: 100%; padding: 9px; border: none; border-radius: 9px; cursor: pointer;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; font-size: 12.5px; font-weight: 700;
+}
+.jm-refill { width: 100%; padding: 7px; border: 1px solid #e2e8f0; border-radius: 9px; margin-top: 6px; background: #fff; color: #4f46e5; font-size: 11.5px; font-weight: 600; cursor: pointer; }
+.jm-foot { padding: 7px 14px; font-size: 10px; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; }
+.jm-foot a { color: #4f46e5; font-weight: 600; text-decoration: none; }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate JobMate AI Icons</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .icon-container { display: flex; flex-direction: column; gap: 20px; }
+    .icon-item { display: flex; align-items: center; gap: 20px; }
+    canvas { border: 1px solid #ccc; border-radius: 16px; }
+    a { padding: 8px 16px; background: #4f46e5; color: white; text-decoration: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Generate JobMate AI Extension Icons</h1>
+  <p>Save these images to the <code>icons/</code> directory (overwrites icon16/48/128.png).</p>
+  <div class="icon-container" id="container"></div>
+
+  <script>
+    const sizes = [16, 48, 128];
+    const container = document.getElementById('container');
+
+    function roundedRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    sizes.forEach(size => {
+      const item = document.createElement('div');
+      item.className = 'icon-item';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = size * 8;
+      canvas.height = size * 8;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(size * 8 / 100, size * 8 / 100);
+
+      // Gradient rounded-square background
+      const gradient = ctx.createLinearGradient(0, 0, 100, 100);
+      gradient.addColorStop(0, '#4f46e5');
+      gradient.addColorStop(1, '#7c3aed');
+      roundedRect(ctx, 0, 0, 100, 100, 22);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Back page (translucent, offset up-right)
+      roundedRect(ctx, 35, 10, 44, 62, 9);
+      ctx.fillStyle = 'rgba(255,255,255,0.38)';
+      ctx.fill();
+
+      // Front page (solid white)
+      roundedRect(ctx, 21, 28, 46, 66, 9);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = `icon${size}.png`;
+      link.textContent = `Download icon${size}.png`;
+
+      item.appendChild(canvas);
+      item.appendChild(link);
+      container.appendChild(item);
+    });
+  </script>
+</body>
+</html>

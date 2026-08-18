@@ -1,0 +1,16 @@
+{
+  "name": "jobmate-ai",
+  "version": "1.0.0",
+  "description": "JobMate AI - Chrome extension that auto-fills job application forms on any career site from your resume.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/run.js && node test/popup-test.js && node test/background-test.js && node test/features-test.js && node test/detector-test.js"
+  },
+  "keywords": ["chrome-extension", "autofill", "job-application", "resume-parser"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jsdom": "^24.1.3"
+  }
+}

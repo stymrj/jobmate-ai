@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "JobMate AI - Auto Fill Application form",
+  "short_name": "JobMate AI",
+  "version": "1.0.0",
+  "description": "JobMate AI auto-fills job application forms on any career site from your resume (PDF/DOCX). Multi-step, screening questions and EEO.",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/detector.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "JobMate AI - Auto Fill Application form",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "libs/pdf.min.js",
+        "libs/pdf.worker.min.js",
+        "libs/mammoth.browser.min.js",
+        "src/parser.js",
+        "src/ai-service.js",
+        "src/mapper.js",
+        "src/filler.js",
+        "src/navigator.js",
+        "src/overlay.js",
+        "src/content.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.openai.com https://api.deepseek.com https://generativelanguage.googleapis.com https://api.anthropic.com http://localhost:* http://127.0.0.1:* https://*.jobmate-ai.com"
+  },
+  "incognito": "spanning"
+}
