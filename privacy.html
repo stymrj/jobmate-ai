@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — JobMate AI</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f8fafc; color: #0f172a; line-height: 1.65; padding: 48px 20px; }
+  .card { max-width: 760px; margin: 0 auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 44px 52px; box-shadow: 0 8px 30px rgba(15,23,42,0.08); }
+  h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; }
+  .updated { color: #64748b; font-size: 13px; margin-bottom: 26px; }
+  h2 { font-size: 17px; font-weight: 700; margin: 28px 0 10px; }
+  p { margin-bottom: 14px; font-size: 14.5px; }
+  ul { margin: 0 0 16px 22px; }
+  li { margin-bottom: 8px; font-size: 14.5px; }
+  code { background: #f1f5f9; border-radius: 5px; padding: 1px 6px; font-size: 13px; }
+  a { color: #4f46e5; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Privacy Policy — JobMate AI</h1>
+  <div class="updated">Last updated: August 2026</div>
+
+  <p>JobMate AI ("the extension") helps users fill out job application forms on career websites (Workday, Greenhouse, Lever, and others) from a resume the user uploads. This policy describes what data is processed, where it goes, and what the user controls.</p>
+
+  <h2>1. What stays on your device</h2>
+  <p>Everything below is stored only in the extension's local browser storage (<code>chrome.storage.local</code>) on the user's own device and never sent to us:</p>
+  <ul>
+    <li>The parsed resume (name, contact details, work experience, education, skills)</li>
+    <li>The original resume file (PDF/DOCX) the user uploaded</li>
+    <li>Extension settings (AI provider choice, API key if the user provides one, analytics preference)</li>
+    <li>A local cache of previously confirmed field values (used to avoid repeating AI calls on future applications)</li>
+  </ul>
+
+  <h2>2. What leaves the device</h2>
+  <ul>
+    <li><strong>AI provider calls (optional, user-initiated).</strong> When the user enables AI features and provides their own key (or uses the admin-provided shared key), the resume text and the labels of the form fields being filled are sent to the AI provider the user selected in Settings — OpenAI, Google Gemini, DeepSeek, or Anthropic Claude. This happens only when the user uses an AI feature, and the destination is always the provider the user chose. The extension never sends this data anywhere else.</li>
+    <li><strong>Anonymous usage statistics (off by default).</strong> If the user explicitly enables "Send anonymous usage statistics", the extension sends batched, anonymous events (extension installed, resume saved, autofill started, number of fields filled, site host) to the admin endpoint configured in Settings. Events contain a randomly generated ID, never names, emails, or resume content. Disabling analytics stops all such transmissions.</li>
+  </ul>
+
+  <h2>3. What we do not do</h2>
+  <ul>
+    <li>We do not collect, store, or sell user data on our own servers.</li>
+    <li>We do not use the data for anything other than filling application forms (the extension's single purpose).</li>
+    <li>The extension contains no remote code, no ads, and no trackers.</li>
+  </ul>
+
+  <h2>4. Permissions</h2>
+  <p>The extension uses the <code>&lt;all_urls&gt;</code> host permission because job application forms appear on any career site. It detects and fills only pages that contain a fillable job-application form; it does not read or alter other content.</p>
+
+  <h2>5. User control and deletion</h2>
+  <p>Users can remove their resume, settings, and cache at any time by clearing the extension's data via the popup or by removing the extension in <code>chrome://extensions</code> (which deletes all locally stored data).</p>
+
+  <h2>6. Contact</h2>
+  <p>Questions about this policy: contact@jobmate-ai.com</p>
+</div>
+</body>
+</html>
